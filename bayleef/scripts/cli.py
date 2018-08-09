@@ -386,8 +386,8 @@ def sbatch_master(input, bayleef_data, add_option, njobs, **options):
 
     for file in files:
         command = "bayleef load-master {} {}".format(file, bayleef_data)
-        logger.info("Dispatching 'bayleef load-master {} {}'".format(input, bayleef_data))
-        out = sbatch(wrap='which python', **options)
+        logger.info("Dispatching {}".format(command))
+        out = sbatch(wrap=command, **options)
         logger.info(out)
         limit_jobs(limit=njobs)
 
