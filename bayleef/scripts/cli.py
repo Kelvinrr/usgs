@@ -378,8 +378,7 @@ def sbatch_master(input, bayleef_data, add_option, njobs, **options):
     if not os.path.exists(bayleef_data):
         raise Exception('Bayleef data directory {} is not a directory or does not exist'.format(bayleef_data))
 
-    glob_pattern = re.compile(fnmatch.translate(input+'/**/*.hdf'), re.IGNORECASE).pattern
-    files = glob(glob_pattern, recursive=True)
+    files = glob(input+'/**/*.hdf', recursive=True)
 
     logger.info("sbatch options: log={log} cpus={cpus} mem={mem} time={time} njobs={njobs}".format(**options, njobs=njobs))
     logger.info("other options: {}".format(add_option if add_option else None))
@@ -394,7 +393,7 @@ def sbatch_master(input, bayleef_data, add_option, njobs, **options):
 @click.command()
 @click.argument("input", required=True)
 @click.argument("bayleef_data", required=True)
-@click.option("-r", default=False, help="Set to recursively glob .HDF files (Warning: Every .HDF file under the directory will be treated as a Master file)")
+@click.option("-r", is_flag=True, help="Set to recursively glob .HDF files (Warning: Every .HDF file under the directory will be treated as a Master file)")
 def load_master(input, bayleef_data, r):
     """
     Load master data.
@@ -413,8 +412,7 @@ def load_master(input, bayleef_data, r):
     if not r: # if not recursive
         files = [input]
     else:
-        glob_pattern = re.compile(fnmatch.translate(input+'/**/*.hdf'), re.IGNORECASE).pattern
-        files = glob(glob_pattern, recursive=True)
+        files = glob(input+'/**/*.hdf', recursive=True)
 
     total = len(files)
 
