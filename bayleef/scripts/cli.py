@@ -362,7 +362,6 @@ def to_sql(db, dataset, root, host, port, user, password):
 @click.argument("bayleef_data", required=True)
 @click.option("--add-option", "-ao", default='', help="Text containing misc. sbatch parameters")
 @click.option("--log", "-l", default=None, help="Log output directory, default is redirected to /dev/null")
-@click.option("--cpus", "-c", default=1, help="CPUs per job. Default = 1")
 @click.option("--mem", '-m', default=4, help="Memory per job in gigabytes. Default = 4")
 @click.option("--time", "-t", default='01:00:00', help="Max time per job, default = one hour.")
 @click.option("--njobs", "-n", default='-1', help="Max number of conccurent jobs, -1 for unlimited. Default = -1")
@@ -380,7 +379,7 @@ def sbatch_master(input, bayleef_data, add_option, njobs, **options):
 
     files = glob(input+'/**/*.hdf', recursive=True)
 
-    logger.info("sbatch options: log={log} cpus={cpus} mem={mem} time={time} njobs={njobs}".format(**options, njobs=njobs))
+    logger.info("sbatch options: log={log} mem={mem} time={time} njobs={njobs}".format(**options, njobs=njobs))
     logger.info("other options: {}".format(add_option if add_option else None))
 
     for file in files:
